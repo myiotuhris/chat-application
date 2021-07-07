@@ -1,0 +1,34 @@
+{%load static%}
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{room}}</title>
+
+</head>
+<body>
+
+<div style="text-align: center; color: white">
+    <h2>Room : {{room}}</h2>
+</div>
+
+
+<div class="container">
+    
+
+    <!-- <form id="post-form" method="POST" action="checkroom">
+        {% csrf_token %}
+        <label>Room Name</label>
+        <input type="text" name="room_name" id="room_name" width="100px" />
+        <label>Username</label>
+        <input type="text" name="username" id="username" width="100px" />
+        <input type="submit" value="Enter Room">
+    </form> -->
+</div>
+
+
+</body>
+
+
+</html>

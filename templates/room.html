@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <title>{{room}}</title>
 
 </head>
@@ -14,21 +15,54 @@
 </div>
 
 
-<div class="container">
-    
-
-    <!-- <form id="post-form" method="POST" action="checkroom">
-        {% csrf_token %}
-        <label>Room Name</label>
-        <input type="text" name="room_name" id="room_name" width="100px" />
-        <label>Username</label>
-        <input type="text" name="username" id="username" width="100px" />
-        <input type="submit" value="Enter Room">
-    </form> -->
+<div id="display"></div>
+<script>
+    $(document).ready(()=>{
+        setInterval(()=>{
+            $.ajax({
+                type: 'GET',
+                url: '/getmessage/{{room}}/',
+                success:(response)=>{
+                    $("#display").empty();
+                    for(let key in response.messages){
+                        var temp="<div class='container darker'><b>"+response.messages[key].username+"</b><p>"+response.messages[key].value+"</p></div>";
+                        $("#display").append(temp);
+                    }
+                },
+                error:(response)=>{
+                    alert("An error occurred while loading chats");
+                }
+                
+            });
+        },1000);    
+    })
+</script>
+<div>
+    <form id="send">
+        {%csrf_token%}
+        <input type="hidden" name="room_id" id="room_id" value={{room_details.id}}/>
+        <input type="hidden" name="username" id="username" value={{username}}/>
+        <input type="text" name="message" id="message" width="100px"/>
+        <input type="submit" value="Send">
+    </form>
 </div>
+<script type="text/javascript">
+    $(document).on('submit','#send',(e)=>{
+        e.preventDefault()
+        $.ajax({
+            type:'POST',
+            url:'/send/',
+            data:{
+                room_id:$('#room_id').val(),
+                username:$('#username').val(),
+                message:$('#message').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
 
+        });
+        document.getElementById("message").value="";
+    })
 
+</script>
 </body>
-
-
 </html>

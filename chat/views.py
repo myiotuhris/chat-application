@@ -15,8 +15,8 @@ def room(request,room):
     })
 
 def checkRoom(request):
-    room=request.POST['room_name']
-    user=request.POST['username']
+    room=request.POST['room_name'].strip()
+    user=request.POST['username'].strip()
     if not Room.objects.filter(name=room).exists():
         newroom=Room.objects.create(name=room)
         newroom.save()

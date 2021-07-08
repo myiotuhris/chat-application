@@ -21,7 +21,7 @@
         setInterval(()=>{
             $.ajax({
                 type: 'GET',
-                url: '/getmessage/{{room}}/',
+                url: '/getmessage/{{room}}',
                 success:(response)=>{
                     $("#display").empty();
                     for(let key in response.messages){
@@ -51,7 +51,7 @@
         e.preventDefault()
         $.ajax({
             type:'POST',
-            url:'/send/',
+            url:'/send',
             data:{
                 room_id:$('#room_id').val(),
                 username:$('#username').val(),

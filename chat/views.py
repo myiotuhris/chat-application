@@ -24,8 +24,11 @@ def checkRoom(request):
 
 def sendMessage(request):
     text=request.POST['message']
-    room_id = request.POST['room_id']
-    user=request.POST['username']
+    text.strip()
+    if not len(text):
+        return
+    room_id = request.POST['room_id'][:-1]
+    user=request.POST['username'][:-1]
 
     new_msg=Message.objects.create(value=text, username= user,room= room_id)
     new_msg.save()
